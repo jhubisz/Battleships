@@ -15,6 +15,20 @@ namespace BattleshipTests
         }
 
         [Fact]
+        public void ShipGetsDefaultLengthOnCreation()
+        {
+            Assert.True(Ship.Length > 0);
+        }
+
+        [Fact]
+        public void ShipGetsCorrectLengthOnCreation()
+        {
+            var shipLength = 3;
+            Ship = new Ship(shipLength);
+            Assert.Equal(shipLength, Ship.Length);
+        }
+
+        [Fact]
         public void ShipImpolementsIPlaceableInterface()
         {
             Assert.IsAssignableFrom<IPlacable>(Ship);
