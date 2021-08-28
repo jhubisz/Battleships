@@ -1,5 +1,7 @@
-﻿using Battleship.Exceptions;
+﻿using Battleship.Enums;
+using Battleship.Exceptions;
 using Battleship.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Battleship
@@ -18,6 +20,31 @@ namespace Battleship
         {
             Length = length;
             Fields = new List<(int x, int y)>();
+        }
+
+        public List<(int x, int y)> Place((int x, int y) initialPosition, ShipDirection shipDirection)
+        {
+            if (shipDirection == ShipDirection.Horizontal)
+                PlaceHorizontal(initialPosition);
+
+            if (shipDirection == ShipDirection.Vertical)
+                PlaceVertical(initialPosition);
+
+            return Fields;
+        }
+        private void PlaceHorizontal((int x, int y) initialPosition)
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                AddPosition(initialPosition.x + i, initialPosition.y);
+            }
+        }
+        private void PlaceVertical((int x, int y) initialPosition)
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                AddPosition(initialPosition.x, initialPosition.y + i);
+            }
         }
 
         public void AddPosition(int x, int y)
