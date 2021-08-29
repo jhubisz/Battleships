@@ -1,4 +1,5 @@
 ﻿using Battleship.Enums;
+using Battleship.Exceptions;
 using Battleship.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,34 @@ namespace Battleship
             var ship = new Ship(shipLength);
             ship.Place(initialPosition, direction);
 
+            CheckIfShipOutOfBounds(ship);
+            CheckIfShipOverlaps(ship);
+
             Ships.Add(ship);
             PopulateShipFields(ship);
             
             return ship;
+        }
+
+        private void CheckIfShipOverlaps(Ship ship)
+        {
+            foreach (var field in ship.Fields)
+            {
+                if (Fields[field.x - 1, field.y - 1] != null)
+                    throw new InvalidPositionException("Ship overlaps with other ship");
+            }
+        }
+
+        private void CheckIfShipOutOfBounds(Ship ship)
+        {
+            foreach(var field in ship.Fields)
+            {
+                if (field.x < Fields.GetLowerBound(0) + 1 
+                    || field.y < Fields.GetLowerBound(1) + 1
+                    || field.x > Fields.GetUpperBound(0) + 1
+                    || field.y > Fields.GetUpperBound(1) + 1)
+                    throw new InvalidPositionException("Ship out of bounds");
+            }
         }
 
         private void PopulateShipFields(Ship ship)
