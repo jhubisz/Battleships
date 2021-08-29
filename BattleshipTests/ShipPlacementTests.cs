@@ -1,6 +1,6 @@
 ﻿using Battleship;
-using Xunit;
 using Battleship.Enums;
+using Xunit;
 
 namespace BattleshipTests
 {
@@ -29,7 +29,7 @@ namespace BattleshipTests
             var initialPosiotion = (x: 1, y: 1);
             Ship.Place(initialPosiotion, ShipDirection.Horizontal);
 
-            for(int i = 0; i < SHIP_LENGTH; i++)
+            for (int i = 0; i < SHIP_LENGTH; i++)
             {
                 Assert.Equal((initialPosiotion.x + i, initialPosiotion.y), Ship.Fields[i]);
             }

@@ -1,6 +1,6 @@
 ﻿using Battleship;
-using Battleship.Interfaces;
 using Battleship.Exceptions;
+using Battleship.Interfaces;
 using Xunit;
 
 namespace BattleshipTests

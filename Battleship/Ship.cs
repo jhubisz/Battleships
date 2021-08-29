@@ -1,7 +1,6 @@
 ﻿using Battleship.Enums;
 using Battleship.Exceptions;
 using Battleship.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace Battleship

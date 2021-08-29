@@ -2,7 +2,6 @@
 using Battleship.Exceptions;
 using Battleship.Interfaces;
 using Battleship.ShipConstraintsConfiguration;
-using System;
 using System.Collections.Generic;
 
 namespace Battleship
@@ -34,7 +33,7 @@ namespace Battleship
             CheckIfShipOutOfBounds(ship);
             CheckIfShipOverlaps(ship);
             CheckIfShipInCloseProximityWithOtherShip(ship);
-            
+
             AddShipToBoard(ship);
             PopulateShipFields(ship);
 
@@ -49,9 +48,9 @@ namespace Battleship
 
         private void CheckIfShipOutOfBounds(Ship ship)
         {
-            foreach(var field in ship.Fields)
+            foreach (var field in ship.Fields)
             {
-                if (field.x < Fields.GetLowerBound(0) + 1 
+                if (field.x < Fields.GetLowerBound(0) + 1
                     || field.y < Fields.GetLowerBound(1) + 1
                     || field.x > Fields.GetUpperBound(0) + 1
                     || field.y > Fields.GetUpperBound(1) + 1)
@@ -70,11 +69,11 @@ namespace Battleship
 
         private void CheckIfShipInCloseProximityWithOtherShip(Ship ship)
         {
-            foreach(var field in ship.Fields)
+            foreach (var field in ship.Fields)
             {
-                for(int x = field.x - 2; x <= field.x + 1; x++)
+                for (int x = field.x - 2; x <= field.x + 1; x++)
                 {
-                    for(int y = field.y - 2; y <= field.y; y++)
+                    for (int y = field.y - 2; y <= field.y; y++)
                     {
                         if (x >= Fields.GetLowerBound(0) && y >= Fields.GetLowerBound(1)
                             && x < Fields.GetUpperBound(0) && y < Fields.GetUpperBound(1)

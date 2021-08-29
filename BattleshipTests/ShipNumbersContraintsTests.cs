@@ -1,14 +1,14 @@
 ﻿using Battleship;
-using Xunit;
 using Battleship.Enums;
 using Battleship.Exceptions;
 using Battleship.ShipConstraintsConfiguration;
+using Xunit;
 
 namespace BattleshipTests
 {
     public class ShipNumbersConstraintsTests
     {
-        public Board Board{ get; private set; }
+        public Board Board { get; private set; }
 
         public ShipNumbersConstraintsTests()
         {
@@ -37,10 +37,10 @@ namespace BattleshipTests
         }
 
         [Theory]
-        [InlineData(2,5)]
-        [InlineData(3,4)]
-        [InlineData(4,3)]
-        [InlineData(5,2)]
+        [InlineData(2, 5)]
+        [InlineData(3, 4)]
+        [InlineData(4, 3)]
+        [InlineData(5, 2)]
         public void ThrowsShipNotAllowedExceptionForTooManyShipsOfCertainKind(int shipLength, int shipNo)
         {
             var shipPosition = (x: 1, y: 1);
@@ -52,7 +52,7 @@ namespace BattleshipTests
                     Board.PlaceShip(shipLength, shipPosition, shipDirection);
                 else
                     Assert.Throws<ShipNotAllowedException>(() => Board.PlaceShip(shipLength, shipPosition, shipDirection));
-                
+
                 shipPosition = (x: shipPosition.x, y: shipPosition.y + 2);
             }
         }

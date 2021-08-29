@@ -1,8 +1,8 @@
 ﻿using Battleship;
-using Xunit;
 using Battleship.Enums;
 using Battleship.Exceptions;
 using Battleship.ShipConstraintsConfiguration;
+using Xunit;
 
 namespace BattleshipTests
 {
@@ -24,7 +24,7 @@ namespace BattleshipTests
             var initialPosition = (x: 1, y: 1);
             var ship = Board.PlaceShip(shipLength, initialPosition, ShipDirection.Horizontal);
 
-            Assert.NotNull(ship); 
+            Assert.NotNull(ship);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace BattleshipTests
         }
 
         [Theory]
-        [InlineData(1, 1, 3, ShipDirection.Horizontal, 
+        [InlineData(1, 1, 3, ShipDirection.Horizontal,
                     1, 1, 3, ShipDirection.Horizontal)] // full overlap
         [InlineData(1, 1, 3, ShipDirection.Horizontal,
                     3, 1, 3, ShipDirection.Horizontal)] // overlap 1 field horizontaly
@@ -86,7 +86,7 @@ namespace BattleshipTests
                     1, 1, 3, ShipDirection.Horizontal)] // overlap 1 field horizontaly
         [InlineData(1, 1, 3, ShipDirection.Horizontal,
                     1, 1, 3, ShipDirection.Vertical)] // overlap 1 field horizontaly / verticaly
-        [InlineData(1, 1, 3, ShipDirection.Vertical,                                                    
+        [InlineData(1, 1, 3, ShipDirection.Vertical,
                     1, 3, 3, ShipDirection.Horizontal)] // overlap 1 field verticaly / horizontaly
         [InlineData(2, 1, 3, ShipDirection.Vertical,
                     1, 2, 3, ShipDirection.Horizontal)] // cross overlap 1 field
@@ -102,8 +102,8 @@ namespace BattleshipTests
         }
 
         [Theory]
-        [InlineData(1,1,3,ShipDirection.Horizontal,
-                    4,1,3,ShipDirection.Horizontal)] // ship to the left to close
+        [InlineData(1, 1, 3, ShipDirection.Horizontal,
+                    4, 1, 3, ShipDirection.Horizontal)] // ship to the left to close
         [InlineData(4, 1, 3, ShipDirection.Horizontal,
                     1, 1, 3, ShipDirection.Horizontal)] // ship to the right to close
         [InlineData(2, 1, 3, ShipDirection.Horizontal,

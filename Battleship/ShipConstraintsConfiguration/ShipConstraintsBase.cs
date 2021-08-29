@@ -11,7 +11,7 @@ namespace Battleship.ShipConstraintsConfiguration
         /// <summary>
         /// index determines the length of ship, value determines the no of allowed ships
         /// </summary>
-        public Dictionary<int, int> ExistingShips { get; } 
+        public Dictionary<int, int> ExistingShips { get; }
 
         public ShipConstraintsBase()
         {
@@ -28,7 +28,7 @@ namespace Battleship.ShipConstraintsConfiguration
             if (!AllowedShips.ContainsKey(shipLength))
                 return false;
 
-            if (ExistingShips.ContainsKey(shipLength) 
+            if (ExistingShips.ContainsKey(shipLength)
                 && ExistingShips[shipLength] >= AllowedShips[shipLength])
                 return false;
 

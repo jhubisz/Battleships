@@ -1,6 +1,5 @@
 using Battleship;
 using Battleship.ShipConstraintsConfiguration;
-using System;
 using Xunit;
 
 namespace BattleshipTests
