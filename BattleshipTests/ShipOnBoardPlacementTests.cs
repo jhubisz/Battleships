@@ -120,5 +120,51 @@ namespace BattleshipTests
 
             Assert.Throws<InvalidPositionProximityException>(() => Board.PlaceShip(ship2Length, ship2Position, ship2Direction));
         }
+
+        /// <summary>
+        ///    1 2 3 4 5 6 7 8 9 10   
+        /// 1  █ █ █ ░ █ █ ░ ░ ░ ░ ­­
+        /// 2  ░ ░ ░ ░ ░ ░ ░ ░ █ ░
+        /// 3  ░ ░ █ █ █ █ █ ░ █ ░
+        /// 4  ░ ░ ░ ░ ░ ░ ░ ░ █ ░
+        /// 5  ░ █ ░ █ █ █ █ ░ ░ ░
+        /// 6  ░ █ ░ ░ ░ ░ ░ ░ ░ █
+        /// 7  ░ █ ░ ░ ░ █ █ █ ░ █
+        /// 8  ░ █ ░ ░ ░ ░ ░ ░ ░ ░ 
+        /// 9  ░ ░ ░ █ █ ░ ░ █ ░ ░ 
+        /// 10 ░ ░ ░ ░ ░ ░ ░ █ ░ ░            
+        /// </summary>
+        [Fact]
+        public void BoardAllowsPlacingAllShips()
+        {
+            var ship51 = Board.PlaceShip(5, (x: 3, y: 3), ShipDirection.Horizontal);
+
+            var ship41 = Board.PlaceShip(4, (x: 2, y: 5), ShipDirection.Vertical);
+            var ship42 = Board.PlaceShip(4, (x: 4, y: 5), ShipDirection.Horizontal);
+
+            var ship31 = Board.PlaceShip(3, (x: 1, y: 1), ShipDirection.Horizontal);
+            var ship32 = Board.PlaceShip(3, (x: 9, y: 2), ShipDirection.Vertical);
+            var ship33 = Board.PlaceShip(3, (x: 6, y: 7), ShipDirection.Horizontal);
+
+            var ship21 = Board.PlaceShip(2, (x: 5, y: 1), ShipDirection.Horizontal);
+            var ship22 = Board.PlaceShip(2, (x: 10, y: 6), ShipDirection.Vertical);
+            var ship23 = Board.PlaceShip(2, (x: 4, y: 9), ShipDirection.Horizontal);
+            var ship24 = Board.PlaceShip(2, (x: 8, y: 9), ShipDirection.Vertical);
+
+            Assert.Collection(Board.Ships,
+                item => Assert.Equal(ship51, item),
+
+                item => Assert.Equal(ship41, item),
+                item => Assert.Equal(ship42, item),
+
+                item => Assert.Equal(ship31, item),
+                item => Assert.Equal(ship32, item),
+                item => Assert.Equal(ship33, item),
+
+                item => Assert.Equal(ship21, item),
+                item => Assert.Equal(ship22, item),
+                item => Assert.Equal(ship23, item),
+                item => Assert.Equal(ship24, item));
+        }
     }
 }
