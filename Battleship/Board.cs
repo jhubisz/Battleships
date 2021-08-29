@@ -28,20 +28,12 @@ namespace Battleship
 
             CheckIfShipOutOfBounds(ship);
             CheckIfShipOverlaps(ship);
+            CheckIfShipInCloseProximityWithOtherShip(ship);
 
             Ships.Add(ship);
             PopulateShipFields(ship);
             
             return ship;
-        }
-
-        private void CheckIfShipOverlaps(Ship ship)
-        {
-            foreach (var field in ship.Fields)
-            {
-                if (Fields[field.x - 1, field.y - 1] != null)
-                    throw new InvalidPositionException("Ship overlaps with other ship");
-            }
         }
 
         private void CheckIfShipOutOfBounds(Ship ship)
@@ -52,7 +44,33 @@ namespace Battleship
                     || field.y < Fields.GetLowerBound(1) + 1
                     || field.x > Fields.GetUpperBound(0) + 1
                     || field.y > Fields.GetUpperBound(1) + 1)
-                    throw new InvalidPositionException("Ship out of bounds");
+                    throw new InvalidPositionOutOfBoundsException("Ship out of bounds");
+            }
+        }
+
+        private void CheckIfShipOverlaps(Ship ship)
+        {
+            foreach (var field in ship.Fields)
+            {
+                if (Fields[field.x - 1, field.y - 1] != null)
+                    throw new InvalidPositionOverlapException("Ship overlaps with other ship");
+            }
+        }
+
+        private void CheckIfShipInCloseProximityWithOtherShip(Ship ship)
+        {
+            foreach(var field in ship.Fields)
+            {
+                for(int x = field.x - 2; x <= field.x + 1; x++)
+                {
+                    for(int y = field.y - 2; y <= field.y; y++)
+                    {
+                        if (x >= Fields.GetLowerBound(0) && y >= Fields.GetLowerBound(1)
+                            && x < Fields.GetUpperBound(0) && y < Fields.GetUpperBound(1)
+                            && Fields[x, y] != null && Fields[x, y] != ship)
+                            throw new InvalidPositionProximityException("Ship to close to other ship.");
+                    }
+                }
             }
         }
 
