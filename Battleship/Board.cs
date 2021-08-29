@@ -1,6 +1,7 @@
 ﻿using Battleship.Enums;
 using Battleship.Exceptions;
 using Battleship.Interfaces;
+using Battleship.ShipConstraintsConfiguration;
 using System;
 using System.Collections.Generic;
 
@@ -13,27 +14,37 @@ namespace Battleship
         public IPlacable[,] Fields { get; set; }
 
         public List<Ship> Ships { get; set; }
+        public ShipConstraintsBase ShipConstraints { get; set; }
 
-        public Board() : this(DEFAULT_SIZE) { }
-        public Board(int size)
+        public Board(ShipConstraintsBase shipConstraints) : this(DEFAULT_SIZE, shipConstraints) { }
+        public Board(int size, ShipConstraintsBase shipConstraints)
         {
+            ShipConstraints = shipConstraints;
             Fields = new IPlacable[size, size];
             Ships = new List<Ship>();
         }
 
         public Ship PlaceShip(int shipLength, (int x, int y) initialPosition, ShipDirection direction)
         {
+            CheckIfShipIsAllowed(shipLength);
+
             var ship = new Ship(shipLength);
             ship.Place(initialPosition, direction);
 
             CheckIfShipOutOfBounds(ship);
             CheckIfShipOverlaps(ship);
             CheckIfShipInCloseProximityWithOtherShip(ship);
-
-            Ships.Add(ship);
-            PopulateShipFields(ship);
             
+            AddShipToBoard(ship);
+            PopulateShipFields(ship);
+
             return ship;
+        }
+
+        private void CheckIfShipIsAllowed(int shipLength)
+        {
+            if (!ShipConstraints.CheckIfShipAllowed(shipLength))
+                throw new ShipNotAllowedException();
         }
 
         private void CheckIfShipOutOfBounds(Ship ship)
@@ -72,6 +83,12 @@ namespace Battleship
                     }
                 }
             }
+        }
+
+        private void AddShipToBoard(Ship ship)
+        {
+            Ships.Add(ship);
+            ShipConstraints.AddExistingShip(ship.Length);
         }
 
         private void PopulateShipFields(Ship ship)

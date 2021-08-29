@@ -2,6 +2,7 @@
 using Xunit;
 using Battleship.Enums;
 using Battleship.Exceptions;
+using Battleship.ShipConstraintsConfiguration;
 
 namespace BattleshipTests
 {
@@ -12,13 +13,14 @@ namespace BattleshipTests
 
         public ShipOnBoardPlacementTests()
         {
-            Board = new Board();
+            var shipConstraints = new ShipConstraints();
+            Board = new Board(shipConstraints);
         }
 
         [Fact]
         public void BoardAllowsPlacingOfAShip()
         {
-            var shipLength = 1;
+            var shipLength = 2;
             var initialPosition = (x: 1, y: 1);
             var ship = Board.PlaceShip(shipLength, initialPosition, ShipDirection.Horizontal);
 

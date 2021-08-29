@@ -1,4 +1,5 @@
 using Battleship;
+using Battleship.ShipConstraintsConfiguration;
 using System;
 using Xunit;
 
@@ -12,7 +13,8 @@ namespace BattleshipTests
         [InlineData(100)]
         public void BoardFieldsPropHasCorrectSize(int size)
         {
-            var board = new Board(size);
+            var shipConstraints = new ShipConstraints();
+            var board = new Board(size, shipConstraints);
             var fields = board.Fields;
             const int NO_OF_BOARD_DIMENSIONS = 2;
             Assert.Equal(NO_OF_BOARD_DIMENSIONS, fields.Rank);
