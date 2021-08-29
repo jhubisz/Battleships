@@ -1,10 +1,10 @@
-﻿using Battleship;
-using Battleship.Enums;
-using Battleship.Exceptions;
-using Battleship.ShipConstraintsConfiguration;
+﻿using Battleships;
+using Battleships.Enums;
+using Battleships.Exceptions;
+using Battleships.ShipConstraintsConfiguration;
 using Xunit;
 
-namespace BattleshipTests
+namespace BattleshipsTests
 {
     public class ShipOnBoardPlacementTests
     {

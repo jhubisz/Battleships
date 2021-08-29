@@ -1,4 +1,4 @@
-﻿namespace Battleship.Enums
+﻿namespace Battleships.Enums
 {
     public enum ShipDirection
     {

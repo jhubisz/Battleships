@@ -1,10 +1,10 @@
-﻿using Battleship.Enums;
-using Battleship.Exceptions;
-using Battleship.Interfaces;
-using Battleship.ShipConstraintsConfiguration;
+﻿using Battleships.Enums;
+using Battleships.Exceptions;
+using Battleships.Interfaces;
+using Battleships.ShipConstraintsConfiguration;
 using System.Collections.Generic;
 
-namespace Battleship
+namespace Battleships
 {
     public class Board
     {

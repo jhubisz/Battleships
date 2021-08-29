@@ -1,8 +1,8 @@
-﻿using Battleship;
-using Battleship.Enums;
+﻿using Battleships;
+using Battleships.Enums;
 using Xunit;
 
-namespace BattleshipTests
+namespace BattleshipsTests
 {
     public class ShipPlacementTests
     {

@@ -1,8 +1,8 @@
-using Battleship;
-using Battleship.ShipConstraintsConfiguration;
+using Battleships;
+using Battleships.ShipConstraintsConfiguration;
 using Xunit;
 
-namespace BattleshipTests
+namespace BattleshipsTests
 {
     public class BoardTest
     {

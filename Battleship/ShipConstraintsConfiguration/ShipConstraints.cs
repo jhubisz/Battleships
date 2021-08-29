@@ -1,4 +1,4 @@
-﻿namespace Battleship.ShipConstraintsConfiguration
+﻿namespace Battleships.ShipConstraintsConfiguration
 {
     public class ShipConstraints : ShipConstraintsBase
     {

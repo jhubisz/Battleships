@@ -1,9 +1,9 @@
-﻿using Battleship;
-using Battleship.Exceptions;
-using Battleship.Interfaces;
+﻿using Battleships;
+using Battleships.Exceptions;
+using Battleships.Interfaces;
 using Xunit;
 
-namespace BattleshipTests
+namespace BattleshipsTests
 {
     public class ShipTests
     {

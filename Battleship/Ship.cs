@@ -1,9 +1,9 @@
-﻿using Battleship.Enums;
-using Battleship.Exceptions;
-using Battleship.Interfaces;
+﻿using Battleships.Enums;
+using Battleships.Exceptions;
+using Battleships.Interfaces;
 using System.Collections.Generic;
 
-namespace Battleship
+namespace Battleships
 {
     public class Ship : IPlacable
     {

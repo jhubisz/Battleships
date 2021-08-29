@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Battleship.Exceptions
+namespace Battleships.Exceptions
 {
     public class InvalidPositionProximityException : Exception
     {

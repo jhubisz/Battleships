@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Battleship.ShipConstraintsConfiguration
+namespace Battleships.ShipConstraintsConfiguration
 {
     public abstract class ShipConstraintsBase
     {
