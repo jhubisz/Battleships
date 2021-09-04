@@ -16,11 +16,17 @@ namespace Battleships
         public ShipConstraintsBase ShipConstraints { get; set; }
 
         public Board(ShipConstraintsBase shipConstraints) : this(DEFAULT_SIZE, shipConstraints) { }
+
         public Board(int size, ShipConstraintsBase shipConstraints)
         {
             ShipConstraints = shipConstraints;
             Fields = new IPlacable[size, size];
             Ships = new List<Ship>();
+        }
+
+        public bool CheckShotFired(int x, int y)
+        {
+            return Fields[x - 1, y - 1] != null;
         }
 
         public Ship PlaceShip(int shipLength, (int x, int y) initialPosition, ShipDirection direction)
