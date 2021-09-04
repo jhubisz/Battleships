@@ -24,7 +24,7 @@ namespace Battleships
             Ships = new List<Ship>();
         }
 
-        public bool CheckShotFired(int x, int y)
+        public bool CheckFiredShot(int x, int y)
         {
             return Fields[x - 1, y - 1] != null;
         }

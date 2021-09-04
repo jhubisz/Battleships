@@ -18,7 +18,7 @@ namespace BattleshipsTests
         [Fact]
         public void ReturnsFalseForMissedShot()
         {
-            var result = Board.CheckShotFired(1, 1);
+            var result = Board.CheckFiredShot(1, 1);
             Assert.False(result);
         }
 
@@ -29,7 +29,7 @@ namespace BattleshipsTests
                             initialPosition: (x: 1, y: 1),
                             direction: ShipDirection.Horizontal);
             
-            var result = Board.CheckShotFired(1, 1);
+            var result = Board.CheckFiredShot(1, 1);
 
             Assert.True(result);
         }
