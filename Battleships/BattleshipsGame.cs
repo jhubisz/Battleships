@@ -2,6 +2,7 @@
 using Battleships.Exceptions;
 using Battleships.Factories;
 using Battleships.ShipConstraintsConfiguration;
+using System;
 
 namespace Battleships
 {
@@ -25,6 +26,7 @@ namespace Battleships
         {
             if (!AllShipsPlaced)
                 throw new MissingShipsException();
+
             Status = GameStatus.Started;
         }
 
