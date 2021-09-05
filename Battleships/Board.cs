@@ -19,7 +19,6 @@ namespace Battleships
 
         public Board(ShipConstraintsBase shipConstraints, IFieldsFactory fieldsFactory)
             : this(DEFAULT_SIZE, shipConstraints, fieldsFactory) { }
-
         public Board(int size, ShipConstraintsBase shipConstraints, IFieldsFactory fieldsFactory)
         {
             ShipConstraints = shipConstraints;
@@ -29,15 +28,15 @@ namespace Battleships
             Ships = new List<IShip>();
         }
 
-        public bool CheckFiredShot(int x, int y)
+        public FiredShotResult CheckFiredShot(int x, int y)
         {
             if (Fields[x - 1, y - 1] == null)
             {
                 Fields[x - 1, y - 1] = FieldsFactory.CreateMissedShotMarker(x, y);
-                return false;
+                return new FiredShotResult { Hit = false };
             }
 
-            return true;
+            return new FiredShotResult { Hit = true, ResultType = FiredShotResultType.ShipHit };
         }
 
         public IShip PlaceShip(int shipLength, (int x, int y) initialPosition, ShipDirection direction)

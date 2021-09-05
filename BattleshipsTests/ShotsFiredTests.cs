@@ -19,14 +19,17 @@ namespace BattleshipsTests
         }
 
         [Fact]
-        public void ReturnsFalseForMissedShot()
+        public void ReturnsFiredShotResultWithMissedInformationForMissedShot()
         {
             var result = Board.CheckFiredShot(1, 1);
-            Assert.False(result);
+
+            Assert.False(result.Hit);
+            Assert.IsType<FiredShotResult>(result);
+            Assert.Equal(FiredShotResultType.ShotMissed, result.ResultType);
         }
 
         [Fact]
-        public void ReturnsTrueForHitShot()
+        public void ReturnsFiredShotResultWithHitInformationForHitShot()
         {
             Board.PlaceShip(shipLength: 3,
                             initialPosition: (x: 1, y: 1),
@@ -34,7 +37,9 @@ namespace BattleshipsTests
 
             var result = Board.CheckFiredShot(1, 1);
 
-            Assert.True(result);
+            Assert.True(result.Hit);
+            Assert.IsType<FiredShotResult>(result);
+            Assert.Equal(FiredShotResultType.ShipHit, result.ResultType);
         }
 
         [Fact]
