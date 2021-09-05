@@ -12,6 +12,7 @@ namespace Battleships
         public Board PlayerBBoard { get; set; }
 
         public GameStatus Status { get; set; }
+        public GamePlayer PlayerTurn { get; set; }
 
         public bool AllShipsPlaced
         {
@@ -36,6 +37,26 @@ namespace Battleships
             Status = GameStatus.Initialized;
             PlayerABoard = new Board(new T(), fieldsFactory);
             PlayerBBoard = new Board(new T(), fieldsFactory);
+        }
+
+        public FiredShotResult PlayerAShot(int x, int y)
+        {
+            if (PlayerTurn != GamePlayer.PlayerA)
+                throw new InvalidPlayerTurnException();
+
+            var result = PlayerABoard.CheckFiredShot(x, y);
+            PlayerTurn = GamePlayer.PlayerB;
+            return result;
+        }
+
+        public FiredShotResult PlayerBShot(int x, int y)
+        {
+            if (PlayerTurn != GamePlayer.PlayerB)
+                throw new InvalidPlayerTurnException();
+
+            var result = PlayerBBoard.CheckFiredShot(x, y);
+            PlayerTurn = GamePlayer.PlayerA;
+            return result;
         }
     }
 }
