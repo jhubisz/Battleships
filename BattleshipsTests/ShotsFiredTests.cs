@@ -73,6 +73,10 @@ namespace BattleshipsTests
             var ship = Board.PlaceShip(shipLength: 3,
                             initialPosition: (x: 1, y: 1),
                             direction: ShipDirection.Horizontal);
+            
+            Board.PlaceShip(shipLength: 2,
+                            initialPosition: (x: 1, y: 3),
+                            direction: ShipDirection.Horizontal);
 
             Board.CheckFiredShot(1, 1);
             Board.CheckFiredShot(2, 1);
@@ -81,6 +85,30 @@ namespace BattleshipsTests
             Assert.True(result.Hit);
             Assert.IsType<FiredShotResult>(result);
             Assert.Equal(FiredShotResultType.ShipHitAndSink, result.ResultType);
+            Assert.Equal(ship, result.SinkedShip);
+        }
+
+        [Fact]
+        public void ReturnsFiredShotResultWithAllShipsSinkedInformationWhenLastShipSinked()
+        {
+            Board.PlaceShip(shipLength: 3,
+                            initialPosition: (x: 1, y: 1),
+                            direction: ShipDirection.Horizontal);
+
+            var ship = Board.PlaceShip(shipLength: 2,
+                            initialPosition: (x: 1, y: 3),
+                            direction: ShipDirection.Horizontal);
+
+            Board.CheckFiredShot(1, 1);
+            Board.CheckFiredShot(2, 1);
+            Board.CheckFiredShot(3, 1);
+
+            Board.CheckFiredShot(1, 3);
+            var result = Board.CheckFiredShot(2, 3);
+
+            Assert.True(result.Hit);
+            Assert.IsType<FiredShotResult>(result);
+            Assert.Equal(FiredShotResultType.ShipHitAndAllShipsSinked, result.ResultType);
             Assert.Equal(ship, result.SinkedShip);
         }
     }

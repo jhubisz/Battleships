@@ -5,5 +5,6 @@
         ShotMissed,
         ShipHit,
         ShipHitAndSink,
+        ShipHitAndAllShipsSinked,
     }
 }

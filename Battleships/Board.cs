@@ -15,6 +15,7 @@ namespace Battleships
         public IFieldsFactory FieldsFactory { get; }
 
         public List<IShip> Ships { get; set; }
+        public List<IShip> SinkedShips { get; set; }
         public ShipConstraintsBase ShipConstraints { get; set; }
 
         public Board(ShipConstraintsBase shipConstraints, IFieldsFactory fieldsFactory)
@@ -26,13 +27,34 @@ namespace Battleships
             PopulateEmptyBoard(size);
 
             Ships = new List<IShip>();
+            SinkedShips = new List<IShip>();
         }
 
         public FiredShotResult CheckFiredShot(int x, int y)
         {
             var result = Fields[x - 1, y - 1].CheckHit(x, y);
             Fields[x - 1, y - 1] = result.resultField;
-            return result.result;
+            var firedShotResult = CheckAllShipsSinked(result.result);
+            return firedShotResult;
+        }
+
+        private FiredShotResult CheckAllShipsSinked(FiredShotResult result)
+        {
+            if (result.ResultType != FiredShotResultType.ShipHitAndSink)
+                return result;
+
+            AddSinkedShip(result);
+
+            if (SinkedShips.Count == Ships.Count)
+                result.ResultType = FiredShotResultType.ShipHitAndAllShipsSinked;
+
+            return result;
+        }
+
+        private void AddSinkedShip(FiredShotResult result)
+        {
+            if (!SinkedShips.Contains(result.SinkedShip))
+                SinkedShips.Add(result.SinkedShip);
         }
 
         public IShip PlaceShip(int shipLength, (int x, int y) initialPosition, ShipDirection direction)
