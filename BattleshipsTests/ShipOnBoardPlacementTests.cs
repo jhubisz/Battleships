@@ -1,6 +1,7 @@
 ﻿using Battleships;
 using Battleships.Enums;
 using Battleships.Exceptions;
+using Battleships.Factories;
 using Battleships.ShipConstraintsConfiguration;
 using Xunit;
 
@@ -14,7 +15,8 @@ namespace BattleshipsTests
         public ShipOnBoardPlacementTests()
         {
             var shipConstraints = new ShipConstraints();
-            Board = new Board(shipConstraints);
+            var fieldsFactory = new FieldsFactory();
+            Board = new Board(shipConstraints, fieldsFactory);
         }
 
         [Fact]

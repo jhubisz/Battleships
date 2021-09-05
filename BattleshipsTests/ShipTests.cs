@@ -1,17 +1,20 @@
-﻿using Battleships;
-using Battleships.Exceptions;
-using Battleships.Interfaces;
+﻿using Battleships.Exceptions;
+using Battleships.Factories;
+using Battleships.Fields.Interfaces;
 using Xunit;
 
 namespace BattleshipsTests
 {
     public class ShipTests
     {
-        public Ship Ship { get; private set; }
+        private const int DEFAULT_SHIP_LENGTH = 1;
+        public IFieldsFactory FieldsFactory { get; set; }
+        public IShip Ship { get; private set; }
 
         public ShipTests()
         {
-            Ship = new Ship();
+            FieldsFactory = new FieldsFactory();
+            Ship = FieldsFactory.CreateShip(DEFAULT_SHIP_LENGTH);
         }
 
         [Fact]
@@ -24,7 +27,7 @@ namespace BattleshipsTests
         public void ShipGetsCorrectLengthOnCreation()
         {
             var shipLength = 3;
-            Ship = new Ship(shipLength);
+            Ship = FieldsFactory.CreateShip(shipLength);
             Assert.Equal(shipLength, Ship.Length);
         }
 

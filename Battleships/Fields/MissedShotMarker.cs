@@ -1,5 +1,5 @@
 ﻿using Battleships.Exceptions;
-using Battleships.Fields;
+using Battleships.Fields.Interfaces;
 using System.Collections.Generic;
 
 namespace Battleships.Fields

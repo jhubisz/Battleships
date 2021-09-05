@@ -1,17 +1,21 @@
 ﻿using Battleships;
 using Battleships.Enums;
+using Battleships.Factories;
+using Battleships.Fields.Interfaces;
 using Xunit;
 
 namespace BattleshipsTests
 {
     public class ShipPlacementTests
     {
-        private const int SHIP_LENGTH = 3;
-        public Ship Ship { get; private set; }
+        private const int DEFAULT_SHIP_LENGTH = 3;
+        public IFieldsFactory FieldsFactory { get; set; }
+        public IShip Ship { get; private set; }
 
         public ShipPlacementTests()
         {
-            Ship = new Ship(SHIP_LENGTH);
+            FieldsFactory = new FieldsFactory();
+            Ship = FieldsFactory.CreateShip(DEFAULT_SHIP_LENGTH);
         }
 
         [Fact]
@@ -20,7 +24,7 @@ namespace BattleshipsTests
             var initialPosiotion = (x: 1, y: 1);
             Ship.Place(initialPosiotion, ShipDirection.Horizontal);
 
-            Assert.Equal(SHIP_LENGTH, Ship.Fields.Count);
+            Assert.Equal(DEFAULT_SHIP_LENGTH, Ship.Fields.Count);
         }
 
         [Fact]
@@ -29,7 +33,7 @@ namespace BattleshipsTests
             var initialPosiotion = (x: 1, y: 1);
             Ship.Place(initialPosiotion, ShipDirection.Horizontal);
 
-            for (int i = 0; i < SHIP_LENGTH; i++)
+            for (int i = 0; i < DEFAULT_SHIP_LENGTH; i++)
             {
                 Assert.Equal((initialPosiotion.x + i, initialPosiotion.y), Ship.Fields[i]);
             }
@@ -41,7 +45,7 @@ namespace BattleshipsTests
             var initialPosiotion = (x: 1, y: 1);
             Ship.Place(initialPosiotion, ShipDirection.Vertical);
 
-            for (int i = 0; i < SHIP_LENGTH; i++)
+            for (int i = 0; i < DEFAULT_SHIP_LENGTH; i++)
             {
                 Assert.Equal((initialPosiotion.x, initialPosiotion.y + i), Ship.Fields[i]);
             }

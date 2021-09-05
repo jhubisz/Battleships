@@ -1,20 +1,16 @@
 ﻿using Battleships.Enums;
 using Battleships.Exceptions;
 using Battleships.Fields;
+using Battleships.Fields.Interfaces;
 using System.Collections.Generic;
 
 namespace Battleships.Fields
 {
-    public class Ship : IPlacable
+    public class Ship : IShip
     {
-        private const int DEFAULT_LENGTH = 1;
-
         public List<(int x, int y)> Fields { get; set; }
         public int Length { get; set; }
 
-        public Ship() : this(DEFAULT_LENGTH)
-        {
-        }
         public Ship(int length)
         {
             Length = length;

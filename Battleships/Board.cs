@@ -1,6 +1,8 @@
 ﻿using Battleships.Enums;
 using Battleships.Exceptions;
+using Battleships.Factories;
 using Battleships.Fields;
+using Battleships.Fields.Interfaces;
 using Battleships.ShipConstraintsConfiguration;
 using System.Collections.Generic;
 
@@ -11,35 +13,39 @@ namespace Battleships
         const int DEFAULT_SIZE = 10;
 
         public IPlacable[,] Fields { get; set; }
+        public IFieldsFactory FieldsFactory { get; }
 
-        public List<Ship> Ships { get; set; }
+        public List<IShip> Ships { get; set; }
         public ShipConstraintsBase ShipConstraints { get; set; }
 
-        public Board(ShipConstraintsBase shipConstraints) : this(DEFAULT_SIZE, shipConstraints) { }
+        public Board(ShipConstraintsBase shipConstraints, IFieldsFactory fieldsFactory) 
+            : this(DEFAULT_SIZE, shipConstraints, fieldsFactory) { }
 
-        public Board(int size, ShipConstraintsBase shipConstraints)
+        public Board(int size, ShipConstraintsBase shipConstraints, IFieldsFactory fieldsFactory)
         {
             ShipConstraints = shipConstraints;
+            FieldsFactory = fieldsFactory;
+
             Fields = new IPlacable[size, size];
-            Ships = new List<Ship>();
+            Ships = new List<IShip>();
         }
 
         public bool CheckFiredShot(int x, int y)
         {
             if (Fields[x - 1, y - 1] == null)
             {
-                Fields[x - 1, y - 1] = new MissedShotMarker(x, y);
+                Fields[x - 1, y - 1] = FieldsFactory.CreateMissedShotMarker(x, y);
                 return false;
             }
 
             return true;
         }
 
-        public Ship PlaceShip(int shipLength, (int x, int y) initialPosition, ShipDirection direction)
+        public IShip PlaceShip(int shipLength, (int x, int y) initialPosition, ShipDirection direction)
         {
             CheckIfShipIsAllowed(shipLength);
 
-            var ship = new Ship(shipLength);
+            var ship = FieldsFactory.CreateShip(shipLength);
             ship.Place(initialPosition, direction);
 
             CheckIfShipOutOfBounds(ship);
@@ -63,7 +69,7 @@ namespace Battleships
                 throw new ShipNotAllowedException();
         }
 
-        private void CheckIfShipOutOfBounds(Ship ship)
+        private void CheckIfShipOutOfBounds(IShip ship)
         {
             foreach (var field in ship.Fields)
             {
@@ -75,7 +81,7 @@ namespace Battleships
             }
         }
 
-        private void CheckIfShipOverlaps(Ship ship)
+        private void CheckIfShipOverlaps(IShip ship)
         {
             foreach (var field in ship.Fields)
             {
@@ -84,7 +90,7 @@ namespace Battleships
             }
         }
 
-        private void CheckIfShipInCloseProximityWithOtherShip(Ship ship)
+        private void CheckIfShipInCloseProximityWithOtherShip(IShip ship)
         {
             foreach (var field in ship.Fields)
             {
@@ -101,13 +107,13 @@ namespace Battleships
             }
         }
 
-        private void AddShipToBoard(Ship ship)
+        private void AddShipToBoard(IShip ship)
         {
             Ships.Add(ship);
             ShipConstraints.AddExistingShip(ship.Length);
         }
 
-        private void PopulateShipFields(Ship ship)
+        private void PopulateShipFields(IShip ship)
         {
             foreach (var field in ship.Fields)
                 Fields[field.x - 1, field.y - 1] = ship;
