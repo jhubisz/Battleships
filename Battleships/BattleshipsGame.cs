@@ -37,6 +37,7 @@ namespace Battleships
         {
             var fieldsFactory = new FieldsFactory();
             Status = GameStatus.Initialized;
+            Winner = null;
             PlayerABoard = new Board(new T(), fieldsFactory);
             PlayerBBoard = new Board(new T(), fieldsFactory);
         }

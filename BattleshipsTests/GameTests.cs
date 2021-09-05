@@ -161,6 +161,30 @@ namespace BattleshipsTests
             Assert.Throws<GameFinishedException>(() => Game.PlayerBShot(1,1));
         }
 
+        [Fact]
+        public void GameIsProperlyRestartedWhenInitializeIsRun()
+        {
+            StartGame();
+
+            Game.PlayerAShot(5, 5);
+            Game.PlayerBShot(1, 1);
+
+            Game.PlayerAShot(5, 5);
+            Game.PlayerBShot(1, 3);
+
+            Game.PlayerAShot(5, 5);
+            Game.PlayerBShot(2, 3);
+
+            Game.InitializeGame();
+
+            Assert.IsType<Board>(Game.PlayerABoard);
+            Assert.IsType<Board>(Game.PlayerBBoard);
+            Assert.Empty(Game.PlayerABoard.Ships);
+            Assert.Empty(Game.PlayerBBoard.Ships);
+            Assert.Equal(GameStatus.Initialized, Game.Status);
+            Assert.Null(Game.Winner);
+        }
+
         private void StartGame()
         {
             Game.InitializeGame();
