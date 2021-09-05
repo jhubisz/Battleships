@@ -10,7 +10,7 @@ namespace BattleshipsTests
     public class ShotsFiredTests
     {
         public Board Board { get; private set; }
-     
+
         public ShotsFiredTests()
         {
             var shipConstraints = new ShipConstraints();
@@ -31,7 +31,7 @@ namespace BattleshipsTests
             Board.PlaceShip(shipLength: 3,
                             initialPosition: (x: 1, y: 1),
                             direction: ShipDirection.Horizontal);
-            
+
             var result = Board.CheckFiredShot(1, 1);
 
             Assert.True(result);
@@ -42,7 +42,7 @@ namespace BattleshipsTests
         {
             var shotCoordinates = (x: 1, y: 1);
             var result = Board.CheckFiredShot(shotCoordinates.x, shotCoordinates.y);
-            
+
             Assert.NotNull(Board.ReturnField(shotCoordinates.x, shotCoordinates.y));
             Assert.IsType<MissedShotMarker>(Board.ReturnField(shotCoordinates.x, shotCoordinates.y));
         }

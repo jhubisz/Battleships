@@ -1,7 +1,6 @@
 ﻿using Battleships.Enums;
 using Battleships.Exceptions;
 using Battleships.Factories;
-using Battleships.Fields;
 using Battleships.Fields.Interfaces;
 using Battleships.ShipConstraintsConfiguration;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace Battleships
         public List<IShip> Ships { get; set; }
         public ShipConstraintsBase ShipConstraints { get; set; }
 
-        public Board(ShipConstraintsBase shipConstraints, IFieldsFactory fieldsFactory) 
+        public Board(ShipConstraintsBase shipConstraints, IFieldsFactory fieldsFactory)
             : this(DEFAULT_SIZE, shipConstraints, fieldsFactory) { }
 
         public Board(int size, ShipConstraintsBase shipConstraints, IFieldsFactory fieldsFactory)

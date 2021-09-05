@@ -1,5 +1,4 @@
-﻿using Battleships;
-using Battleships.Enums;
+﻿using Battleships.Enums;
 using Battleships.Factories;
 using Battleships.Fields.Interfaces;
 using Xunit;
