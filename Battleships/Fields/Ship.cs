@@ -10,10 +10,13 @@ namespace Battleships.Fields
         public List<(int x, int y)> Fields { get; set; }
         public int Length { get; set; }
 
+        private List<(int x, int y)> HitFields { get; set; }
+
         public Ship(int length)
         {
             Length = length;
             Fields = new List<(int x, int y)>();
+            HitFields = new List<(int x, int y)>();
         }
 
         public List<(int x, int y)> Place((int x, int y) initialPosition, ShipDirection shipDirection)
@@ -47,6 +50,11 @@ namespace Battleships.Fields
                 throw new PositionExistsException("Position Exists");
             Fields.Add((x, y));
         }
+        private void AddHitField(int x, int y)
+        {
+            if (!HitFields.Contains((x, y)))
+                HitFields.Add((x, y));
+        }
 
         public bool CheckIfPositionExists(int x, int y)
         {
@@ -55,6 +63,13 @@ namespace Battleships.Fields
 
         public (FiredShotResult, IField) CheckHit(int x, int y)
         {
+            if (!CheckIfPositionExists(x, y))
+                return (new FiredShotResult { Hit = false, ResultType = FiredShotResultType.ShotMissed }, this);
+
+            AddHitField(x, y);
+            if (Fields.Count == HitFields.Count)
+                return (new FiredShotResult { Hit = true, ResultType = FiredShotResultType.ShipHitAndSink, SinkedShip = this }, this);
+
             return (new FiredShotResult { Hit = true, ResultType = FiredShotResultType.ShipHit }, this);
         }
     }

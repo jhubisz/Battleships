@@ -4,5 +4,6 @@
     {
         ShotMissed,
         ShipHit,
+        ShipHitAndSink,
     }
 }

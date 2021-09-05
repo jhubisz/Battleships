@@ -32,10 +32,14 @@ namespace BattleshipsTests
             Assert.Equal(FiredShotResultType.ShipHit, result.ResultType);
         }
 
-        [Fact]
-        public void ReturnsFiredShotResultWithMissedInformationForMissedShot()
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(1, 10)]
+        [InlineData(10, 1)]
+        [InlineData(10, 10)]
+        public void ReturnsFiredShotResultWithMissedInformationForMissedShot(int x, int y)
         {
-            var result = Board.CheckFiredShot(1, 1);
+            var result = Board.CheckFiredShot(x, y);
 
             Assert.False(result.Hit);
             Assert.IsType<FiredShotResult>(result);
@@ -61,6 +65,23 @@ namespace BattleshipsTests
 
             Assert.NotNull(Board.ReturnField(shotCoordinates.x, shotCoordinates.y));
             Assert.IsType<MissedShotMarker>(Board.ReturnField(shotCoordinates.x, shotCoordinates.y));
+        }
+
+        [Fact]
+        public void ReturnsFiredShotResultWithShipSinkedInformationWhenAllShipFieldsHit()
+        {
+            var ship = Board.PlaceShip(shipLength: 3,
+                            initialPosition: (x: 1, y: 1),
+                            direction: ShipDirection.Horizontal);
+
+            Board.CheckFiredShot(1, 1);
+            Board.CheckFiredShot(2, 1);
+            var result = Board.CheckFiredShot(3, 1);
+
+            Assert.True(result.Hit);
+            Assert.IsType<FiredShotResult>(result);
+            Assert.Equal(FiredShotResultType.ShipHitAndSink, result.ResultType);
+            Assert.Equal(ship, result.SinkedShip);
         }
     }
 }

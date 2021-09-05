@@ -1,4 +1,5 @@
 ﻿using Battleships.Enums;
+using Battleships.Fields.Interfaces;
 
 namespace Battleships
 {
@@ -6,5 +7,6 @@ namespace Battleships
     {
         public bool Hit { get; set; }
         public FiredShotResultType ResultType { get; set;}
+        public IShip SinkedShip { get; set; }
     }
 }
