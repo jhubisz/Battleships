@@ -6,5 +6,6 @@ namespace Battleships.Factories
     {
         IShip CreateShip(int shipLength);
         IField CreateMissedShotMarker(int x, int y);
+        IField CreateEmptyField();
     }
 }

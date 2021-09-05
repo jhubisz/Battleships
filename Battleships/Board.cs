@@ -23,19 +23,13 @@ namespace Battleships
         {
             ShipConstraints = shipConstraints;
             FieldsFactory = fieldsFactory;
+            PopulateEmptyBoard(size);
 
-            Fields = new IField[size, size];
             Ships = new List<IShip>();
         }
 
         public FiredShotResult CheckFiredShot(int x, int y)
         {
-            if (Fields[x - 1, y - 1] == null)
-            {
-                Fields[x - 1, y - 1] = FieldsFactory.CreateMissedShotMarker(x, y);
-                return new FiredShotResult { Hit = false };
-            }
-
             var result = Fields[x - 1, y - 1].CheckHit(x, y);
             Fields[x - 1, y - 1] = result.resultField;
             return result.result;
@@ -63,6 +57,14 @@ namespace Battleships
             return Fields[x - 1, y - 1];
         }
 
+        private void PopulateEmptyBoard(int size)
+        {
+            Fields = new IField[size, size];
+            for (int x = 0; x < size; x++)
+                for (int y = 0; y < size; y++)
+                    Fields[x, y] = FieldsFactory.CreateEmptyField();
+        }
+
         private void CheckIfShipIsAllowed(int shipLength)
         {
             if (!ShipConstraints.CheckIfShipAllowed(shipLength))
@@ -85,7 +87,7 @@ namespace Battleships
         {
             foreach (var field in ship.Fields)
             {
-                if (Fields[field.x - 1, field.y - 1] != null)
+                if (Fields[field.x - 1, field.y - 1] is IShip)
                     throw new InvalidPositionOverlapException("Ship overlaps with other ship");
             }
         }
@@ -100,7 +102,7 @@ namespace Battleships
                     {
                         if (x >= Fields.GetLowerBound(0) && y >= Fields.GetLowerBound(1)
                             && x < Fields.GetUpperBound(0) && y < Fields.GetUpperBound(1)
-                            && Fields[x, y] != null && Fields[x, y] != ship)
+                            && Fields[x, y] is IShip && Fields[x, y] != ship)
                             throw new InvalidPositionProximityException("Ship to close to other ship.");
                     }
                 }

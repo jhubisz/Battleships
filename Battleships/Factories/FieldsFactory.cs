@@ -14,5 +14,10 @@ namespace Battleships.Factories
         {
             return new MissedShotMarker(x, y);
         }
+
+        public IField CreateEmptyField()
+        {
+            return new EmptyField(this);
+        }
     }
 }
