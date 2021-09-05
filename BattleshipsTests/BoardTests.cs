@@ -5,7 +5,7 @@ using Xunit;
 
 namespace BattleshipsTests
 {
-    public class BoardTest
+    public class BoardTests
     {
         [Theory]
         [InlineData(1)]
