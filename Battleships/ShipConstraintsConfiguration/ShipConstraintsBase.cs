@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Battleships.ShipConstraintsConfiguration
 {
@@ -12,6 +13,16 @@ namespace Battleships.ShipConstraintsConfiguration
         /// index determines the length of ship, value determines the no of allowed ships
         /// </summary>
         public Dictionary<int, int> ExistingShips { get; }
+
+        public bool AllShipsPlaced
+        {
+            get
+            {
+                return
+                    AllowedShips.Keys.All(s => ExistingShips.ContainsKey(s)
+                        && AllowedShips[s] == ExistingShips[s]);
+            }
+        }
 
         public ShipConstraintsBase()
         {
