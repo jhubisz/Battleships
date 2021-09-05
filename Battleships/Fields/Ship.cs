@@ -53,7 +53,7 @@ namespace Battleships.Fields
             return Fields.Contains((x, y));
         }
 
-        public (FiredShotResult, IPlacable) CheckHit(int x, int y)
+        public (FiredShotResult, IField) CheckHit(int x, int y)
         {
             return (new FiredShotResult { Hit = true, ResultType = FiredShotResultType.ShipHit }, this);
         }

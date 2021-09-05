@@ -11,7 +11,7 @@ namespace Battleships
     {
         const int DEFAULT_SIZE = 10;
 
-        public IPlacable[,] Fields { get; set; }
+        public IField[,] Fields { get; set; }
         public IFieldsFactory FieldsFactory { get; }
 
         public List<IShip> Ships { get; set; }
@@ -24,7 +24,7 @@ namespace Battleships
             ShipConstraints = shipConstraints;
             FieldsFactory = fieldsFactory;
 
-            Fields = new IPlacable[size, size];
+            Fields = new IField[size, size];
             Ships = new List<IShip>();
         }
 

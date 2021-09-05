@@ -10,7 +10,7 @@ namespace Battleships.Factories
             return new Ship(shipLength);
         }
 
-        public IPlacable CreateMissedShotMarker(int x, int y)
+        public IField CreateMissedShotMarker(int x, int y)
         {
             return new MissedShotMarker(x, y);
         }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Battleships.Fields
 {
-    public class MissedShotMarker : IPlacable
+    public class MissedShotMarker : IField
     {
         public List<(int x, int y)> Fields { get; set; }
 
@@ -27,7 +27,7 @@ namespace Battleships.Fields
             return Fields.Contains((x, y));
         }
 
-        public (FiredShotResult, IPlacable) CheckHit(int x, int y)
+        public (FiredShotResult, IField) CheckHit(int x, int y)
         {
             return (new FiredShotResult { Hit = false, ResultType = FiredShotResultType.ShotMissed }, this);
         }

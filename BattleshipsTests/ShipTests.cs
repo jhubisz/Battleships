@@ -34,7 +34,7 @@ namespace BattleshipsTests
         [Fact]
         public void ShipImpolementsIPlaceableInterface()
         {
-            Assert.IsAssignableFrom<IPlacable>(Ship);
+            Assert.IsAssignableFrom<IField>(Ship);
         }
 
         [Fact]
