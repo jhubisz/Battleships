@@ -16,13 +16,14 @@ namespace BattleshipsTests
         }
 
         [Fact]
-        public void HasTwoBoardsAfterGameInitializeIsRun()
+        public void HasTwoBoardsAndCorrectPropertiesAfterGameInitializeIsRun()
         {
             Game.InitializeGame();
 
             Assert.IsType<Board>(Game.PlayerABoard);
             Assert.IsType<Board>(Game.PlayerBBoard);
             Assert.Equal(GameStatus.Initialized, Game.Status);
+            Assert.Null(Game.Winner);
         }
 
         [Fact]
@@ -103,15 +104,72 @@ namespace BattleshipsTests
             Assert.Throws<InvalidPlayerTurnException>(() => Game.PlayerBShot(5, 5));
         }
 
+        [Fact]
+        public void ReturnsAllShipsSinkedAndSetsGameWinnerToPlayerAWhenAllShipsSinked()
+        {
+            StartGame();
+
+            Game.PlayerAShot(1, 1);
+            Game.PlayerBShot(5, 5);
+
+            Game.PlayerAShot(1, 3);
+            Game.PlayerBShot(5, 5);
+
+            var result = Game.PlayerAShot(2, 3);
+
+            Assert.Equal(FiredShotResultType.ShipHitAndAllShipsSinked, result.ResultType);
+            Assert.Equal(GameStatus.Finished, Game.Status);
+            Assert.Equal(GamePlayer.PlayerA, Game.Winner);
+        }
+
+        [Fact]
+        public void ReturnsAllShipsSinkedAndSetsGameWinnerToPlayerBWhenAllShipsSinked()
+        {
+            StartGame();
+
+            Game.PlayerAShot(5, 5);
+            Game.PlayerBShot(1, 1);
+
+            Game.PlayerAShot(5, 5);
+            Game.PlayerBShot(1, 3);
+            
+            Game.PlayerAShot(5, 5);
+            var result = Game.PlayerBShot(2, 3);
+
+            Assert.Equal(FiredShotResultType.ShipHitAndAllShipsSinked, result.ResultType);
+            Assert.Equal(GameStatus.Finished, Game.Status);
+            Assert.Equal(GamePlayer.PlayerB, Game.Winner);
+        }
+
+        [Fact]
+        public void ThrowsGameFinishedExceptionAfterGameIsFinished()
+        {
+            StartGame();
+
+            Game.PlayerAShot(5, 5);
+            Game.PlayerBShot(1, 1);
+
+            Game.PlayerAShot(5, 5);
+            Game.PlayerBShot(1, 3);
+
+            Game.PlayerAShot(5, 5);
+            var result = Game.PlayerBShot(2, 3);
+
+            Assert.Equal(FiredShotResultType.ShipHitAndAllShipsSinked, result.ResultType);
+            Assert.Equal(GameStatus.Finished, Game.Status);
+            Assert.Throws<GameFinishedException>(() => Game.PlayerAShot(1,1));
+            Assert.Throws<GameFinishedException>(() => Game.PlayerBShot(1,1));
+        }
+
         private void StartGame()
         {
             Game.InitializeGame();
 
-            Game.PlayerABoard.PlaceShip(2, (1, 1), ShipDirection.Horizontal);
-            Game.PlayerABoard.PlaceShip(3, (1, 3), ShipDirection.Horizontal);
+            Game.PlayerABoard.PlaceShip(1, (1, 1), ShipDirection.Horizontal);
+            Game.PlayerABoard.PlaceShip(2, (1, 3), ShipDirection.Horizontal);
 
-            Game.PlayerBBoard.PlaceShip(2, (1, 1), ShipDirection.Horizontal);
-            Game.PlayerBBoard.PlaceShip(3, (1, 3), ShipDirection.Horizontal);
+            Game.PlayerBBoard.PlaceShip(1, (1, 1), ShipDirection.Horizontal);
+            Game.PlayerBBoard.PlaceShip(2, (1, 3), ShipDirection.Horizontal);
 
             Game.StartGame();
         }

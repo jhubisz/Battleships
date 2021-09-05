@@ -14,6 +14,8 @@ namespace Battleships
         public GameStatus Status { get; set; }
         public GamePlayer PlayerTurn { get; set; }
 
+        public GamePlayer? Winner { get; set; }
+
         public bool AllShipsPlaced
         {
             get
@@ -41,22 +43,46 @@ namespace Battleships
 
         public FiredShotResult PlayerAShot(int x, int y)
         {
-            if (PlayerTurn != GamePlayer.PlayerA)
-                throw new InvalidPlayerTurnException();
+            CheckGameState(GamePlayer.PlayerA);
 
             var result = PlayerABoard.CheckFiredShot(x, y);
+
             PlayerTurn = GamePlayer.PlayerB;
+
+            CheckWinningConditions(result, GamePlayer.PlayerA);
+
             return result;
         }
 
         public FiredShotResult PlayerBShot(int x, int y)
         {
-            if (PlayerTurn != GamePlayer.PlayerB)
-                throw new InvalidPlayerTurnException();
+            CheckGameState(GamePlayer.PlayerB);
 
             var result = PlayerBBoard.CheckFiredShot(x, y);
+
             PlayerTurn = GamePlayer.PlayerA;
+            
+            CheckWinningConditions(result, GamePlayer.PlayerB);
+
             return result;
+        }
+
+        private void CheckGameState(GamePlayer player)
+        {
+            if (Status == GameStatus.Finished)
+                throw new GameFinishedException();
+
+            if (PlayerTurn != player)
+                throw new InvalidPlayerTurnException();
+        }
+
+        private void CheckWinningConditions(FiredShotResult result, GamePlayer player)
+        {
+            if (result.ResultType == FiredShotResultType.ShipHitAndAllShipsSinked)
+            {
+                Status = GameStatus.Finished;
+                Winner = player;
+            }
         }
     }
 }

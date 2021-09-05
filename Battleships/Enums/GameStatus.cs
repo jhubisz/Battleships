@@ -4,5 +4,6 @@
     {
         Initialized,
         Started,
+        Finished,
     }
 }
