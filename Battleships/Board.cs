@@ -36,7 +36,9 @@ namespace Battleships
                 return new FiredShotResult { Hit = false };
             }
 
-            return new FiredShotResult { Hit = true, ResultType = FiredShotResultType.ShipHit };
+            var result = Fields[x - 1, y - 1].CheckHit(x, y);
+            Fields[x - 1, y - 1] = result.resultField;
+            return result.result;
         }
 
         public IShip PlaceShip(int shipLength, (int x, int y) initialPosition, ShipDirection direction)

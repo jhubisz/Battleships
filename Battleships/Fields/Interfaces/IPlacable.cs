@@ -8,5 +8,7 @@ namespace Battleships.Fields.Interfaces
 
         void AddPosition(int x, int y);
         bool CheckIfPositionExists(int x, int y);
+
+        (FiredShotResult result, IPlacable resultField) CheckHit(int x, int y);
     }
 }

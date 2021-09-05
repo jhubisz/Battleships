@@ -1,4 +1,5 @@
-﻿using Battleships.Exceptions;
+﻿using Battleships.Enums;
+using Battleships.Exceptions;
 using Battleships.Fields.Interfaces;
 using System.Collections.Generic;
 
@@ -24,6 +25,11 @@ namespace Battleships.Fields
         public bool CheckIfPositionExists(int x, int y)
         {
             return Fields.Contains((x, y));
+        }
+
+        public (FiredShotResult, IPlacable) CheckHit(int x, int y)
+        {
+            return (new FiredShotResult { Hit = false, ResultType = FiredShotResultType.ShotMissed }, this);
         }
     }
 }
