@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Battleships.Interfaces
+namespace Battleships.Fields
 {
     public interface IPlacable
     {

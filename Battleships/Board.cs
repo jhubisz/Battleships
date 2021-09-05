@@ -1,6 +1,6 @@
 ﻿using Battleships.Enums;
 using Battleships.Exceptions;
-using Battleships.Interfaces;
+using Battleships.Fields;
 using Battleships.ShipConstraintsConfiguration;
 using System.Collections.Generic;
 

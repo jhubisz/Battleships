@@ -1,8 +1,8 @@
 ﻿using Battleships.Exceptions;
-using Battleships.Interfaces;
+using Battleships.Fields;
 using System.Collections.Generic;
 
-namespace Battleships
+namespace Battleships.Fields
 {
     public class MissedShotMarker : IPlacable
     {

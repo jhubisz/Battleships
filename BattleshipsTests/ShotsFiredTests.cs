@@ -1,5 +1,6 @@
 ﻿using Battleships;
 using Battleships.Enums;
+using Battleships.Fields;
 using Battleships.ShipConstraintsConfiguration;
 using Xunit;
 
