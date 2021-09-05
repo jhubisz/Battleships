@@ -33,5 +33,15 @@ namespace BattleshipsTests
 
             Assert.True(result);
         }
+
+        [Fact]
+        public void SetsMissedMarkerOnBoardForMissedShot()
+        {
+            var shotCoordinates = (x: 1, y: 1);
+            var result = Board.CheckFiredShot(shotCoordinates.x, shotCoordinates.y);
+            
+            Assert.NotNull(Board.ReturnField(shotCoordinates.x, shotCoordinates.y));
+            Assert.IsType<MissedShotMarker>(Board.ReturnField(shotCoordinates.x, shotCoordinates.y));
+        }
     }
 }

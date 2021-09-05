@@ -26,7 +26,13 @@ namespace Battleships
 
         public bool CheckFiredShot(int x, int y)
         {
-            return Fields[x - 1, y - 1] != null;
+            if (Fields[x - 1, y - 1] == null)
+            {
+                Fields[x - 1, y - 1] = new MissedShotMarker(x, y);
+                return false;
+            }
+
+            return true;
         }
 
         public Ship PlaceShip(int shipLength, (int x, int y) initialPosition, ShipDirection direction)
@@ -44,6 +50,11 @@ namespace Battleships
             PopulateShipFields(ship);
 
             return ship;
+        }
+
+        public object ReturnField(int x, int y)
+        {
+            return Fields[x - 1, y - 1];
         }
 
         private void CheckIfShipIsAllowed(int shipLength)
