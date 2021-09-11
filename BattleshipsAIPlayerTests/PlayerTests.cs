@@ -12,13 +12,15 @@ namespace BattleshipsAIPlayerTests
         public PlayerTests()
         {
             Game = new BattleshipsGame<ShipConstraintsMock>();
+            Game.InitializeGame();
         }
         
         [Fact]
-        public void PlayerAIInstanceIsCreatedAndAcceptsBoard()
+        public void PlayerAIInstanceIsCreatedAndAcceptsBoardAndPlacesShips()
         {
             var player = new AIPlayer();
             player.Board = Game.PlayerABoard;
+            player.PlaceShips();
         }
     }
 }
