@@ -1,7 +1,7 @@
 ﻿using Battleships;
 using Battleships.Enums;
 using Battleships.Exceptions;
-using BattleshipsTests.Mocks;
+using BattleshipsTests.TestDoubles.Mocks;
 using Xunit;
 
 namespace BattleshipsTests

@@ -1,6 +1,6 @@
 ﻿using Battleships.ShipConstraintsConfiguration;
 
-namespace BattleshipsTests.Mocks
+namespace BattleshipsTests.TestDoubles.Mocks
 {
     public class ShipConstraintsMock : ShipConstraintsBase
     {
