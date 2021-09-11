@@ -1,5 +1,6 @@
 ﻿using Battleships;
 using Battleships.Enums;
+using BattleshipsAIPlayer.Interfaces;
 using System;
 
 namespace BattleshipsAIPlayer
@@ -8,11 +9,11 @@ namespace BattleshipsAIPlayer
     {
         public Board Board { get; set; }
 
-        public PositionRandomizer PositionRandomizer { get; set; }
+        public IPositionRandomizer PositionRandomizer { get; set; }
 
-        public AIPlayer()
+        public AIPlayer(IPositionRandomizer positionRandomizer)
         {
-            PositionRandomizer = new PositionRandomizer();
+            PositionRandomizer = positionRandomizer;
         }
 
         public void PlaceShips()

@@ -1,6 +1,7 @@
 using Battleships;
 using BattleshipsAIPlayer;
 using BattleshipsTests.TestDoubles.Mocks;
+using TestDoubles.Mocks;
 using Xunit;
 
 namespace BattleshipsAIPlayerTests
@@ -18,7 +19,7 @@ namespace BattleshipsAIPlayerTests
         [Fact]
         public void PlayerAIInstanceIsCreatedAndAcceptsBoardAndPlacesShips()
         {
-            var player = new AIPlayer();
+            var player = new AIPlayer(new PositionRandomizer(new RandomGeneratorMock(new int[] { 1 })));
             player.Board = Game.PlayerABoard;
             player.PlaceShips();
         }

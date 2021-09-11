@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BattleshipsAIPlayer\BattleshipsAIPlayer.csproj" />
     <ProjectReference Include="..\Battleships\Battleships.csproj" />
   </ItemGroup>
 
