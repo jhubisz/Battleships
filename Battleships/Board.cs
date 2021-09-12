@@ -1,8 +1,10 @@
 ﻿using Battleships.Enums;
 using Battleships.Exceptions;
 using Battleships.Factories;
+using Battleships.Fields;
 using Battleships.Fields.Interfaces;
 using Battleships.ShipConstraintsConfiguration;
+using System;
 using System.Collections.Generic;
 
 namespace Battleships
@@ -10,6 +12,8 @@ namespace Battleships
     public class Board
     {
         const int DEFAULT_SIZE = 10;
+
+        public int Size { get; }
 
         public IField[,] Fields { get; set; }
         public IFieldsFactory FieldsFactory { get; }
@@ -22,6 +26,7 @@ namespace Battleships
             : this(DEFAULT_SIZE, shipConstraints, fieldsFactory) { }
         public Board(int size, ShipConstraintsBase shipConstraints, IFieldsFactory fieldsFactory)
         {
+            Size = size;
             ShipConstraints = shipConstraints;
             FieldsFactory = fieldsFactory;
             PopulateEmptyBoard(size);
@@ -72,6 +77,25 @@ namespace Battleships
             PopulateShipFields(ship);
 
             return ship;
+        }
+        public bool CheckIfShipPositionValid(int shipLength, (int x, int y) initialPosition, ShipDirection direction)
+        {
+            try
+            {
+                CheckIfShipIsAllowed(shipLength);
+                var ship = FieldsFactory.CreateShip(shipLength);
+                ship.Place(initialPosition, direction);
+
+                CheckIfShipOutOfBounds(ship);
+                CheckIfShipOverlaps(ship);
+                CheckIfShipInCloseProximityWithOtherShip(ship);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public object ReturnField(int x, int y)
