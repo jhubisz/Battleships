@@ -1,4 +1,5 @@
-﻿using BattleshipsAIPlayer.Interfaces;
+﻿using Battleships.Enums;
+using BattleshipsAIPlayer.Interfaces;
 using System;
 
 namespace BattleshipsAIPlayer
@@ -12,7 +13,7 @@ namespace BattleshipsAIPlayer
             RandomGenerator = randomGenerator;
         }
 
-        public (int x, int y) ReturnRandomPosition((int x, int y)[] positions)
+        public (int x, int y, ShipDirection direction) ReturnRandomPosition((int x, int y, ShipDirection direction)[] positions)
         {
             return positions[RandomGenerator.Next(positions.Length)];
         }

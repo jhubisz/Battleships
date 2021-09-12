@@ -1,5 +1,6 @@
 ﻿using Battleships;
 using Battleships.Enums;
+using Battleships.Exceptions;
 using BattleshipsAIPlayer.Interfaces;
 using System;
 
@@ -9,11 +10,13 @@ namespace BattleshipsAIPlayer
     {
         public Board Board { get; set; }
 
-        public IPositionRandomizer PositionRandomizer { get; set; }
+        public IPositionRandomizer PositionRandomizer { get; }
+        public IAvailableShipPositionsFinder PositionFinder { get; }
 
-        public AIPlayer(IPositionRandomizer positionRandomizer)
+        public AIPlayer(IPositionRandomizer positionRandomizer, IAvailableShipPositionsFinder positionFinder)
         {
             PositionRandomizer = positionRandomizer;
+            PositionFinder = positionFinder;
         }
 
         public void PlaceShips()
@@ -22,9 +25,14 @@ namespace BattleshipsAIPlayer
             {
                 for (int i = 0; i < Board.ShipConstraints.AllowedShips[ship]; i++)
                 {
-                    var positionsPlaceholder = new (int x, int y)[] { (1, ship * 2 ) };
-                    var position = PositionRandomizer.ReturnRandomPosition(positionsPlaceholder);
-                    Board.PlaceShip(ship, position, ShipDirection.Horizontal);
+                    var positions = PositionFinder.FindAllPositions(ship, Board);
+
+                    if (positions.Length == 0)
+                        throw new NoAvailableShipPositionsException();
+
+                        var shipsPosition = PositionRandomizer.ReturnRandomPosition(positions);
+                    var position = (shipsPosition.x, shipsPosition.y);
+                    Board.PlaceShip(ship, position, shipsPosition.direction);
                 }
             }
         }

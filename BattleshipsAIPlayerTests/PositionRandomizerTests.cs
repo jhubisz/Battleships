@@ -1,4 +1,5 @@
-﻿using BattleshipsAIPlayer;
+﻿using Battleships.Enums;
+using BattleshipsAIPlayer;
 using TestDoubles.Mocks;
 using Xunit;
 
@@ -11,8 +12,8 @@ namespace BattleshipsAIPlayerTests
         {
             var randomGenerator = new RandomGeneratorMock(new int[] { 0 });
             var positionRandomizer = new PositionRandomizer(randomGenerator);
-            var position = (x: 1, y: 1);
-            var returnPosition = positionRandomizer.ReturnRandomPosition(new (int x, int y)[] { position });
+            var position = (x: 1, y: 1, ShipDirection.Horizontal);
+            var returnPosition = positionRandomizer.ReturnRandomPosition(new (int x, int y, ShipDirection direction)[] { position });
 
             Assert.Equal(position, returnPosition);
         }
@@ -24,11 +25,13 @@ namespace BattleshipsAIPlayerTests
         [InlineData(new int[] { 3, 1, 2, 0, 1, 4, 3, 3, 1, 2, 0, 0, 1, 2, 3 })]
         public void ReturnsPositionFromArrayBasedOnNonRandomNumbersArray(int[] numbersArray)
         {
-            var positionsArray = new (int x, int y)[] { (x: 1, y: 1),
-                                                        (x: 2, y: 2),
-                                                        (x: 3, y: 3),
-                                                        (x: 4, y: 4),
-                                                        (x: 5, y: 5) };
+            var positionsArray = new (int x, int y, ShipDirection direction)[] { 
+                (x: 1, y: 1, ShipDirection.Horizontal),
+                (x: 2, y: 2, ShipDirection.Horizontal),
+                (x: 3, y: 3, ShipDirection.Horizontal),
+                (x: 4, y: 4, ShipDirection.Horizontal),
+                (x: 5, y: 5, ShipDirection.Horizontal) 
+            };
 
             var randomGenerator = new RandomGeneratorMock(numbersArray);
             var positionRandomizer = new PositionRandomizer(randomGenerator);
