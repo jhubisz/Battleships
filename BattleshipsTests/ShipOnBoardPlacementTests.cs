@@ -112,6 +112,14 @@ namespace BattleshipsTests
                     2, 2, 3, ShipDirection.Vertical)] // ship on upper row to close
         [InlineData(2, 4, 3, ShipDirection.Horizontal,
                     3, 1, 3, ShipDirection.Vertical)] // ship on lower row to close
+        [InlineData(1, 10, 3, ShipDirection.Horizontal,
+                    4, 10, 3, ShipDirection.Horizontal)] // last row horizontaly to close
+        [InlineData(1, 9, 3, ShipDirection.Horizontal,
+                    1, 10, 3, ShipDirection.Horizontal)] // last two rows horizontaly to close
+        [InlineData(10, 1, 3, ShipDirection.Vertical,
+                    10, 4, 3, ShipDirection.Vertical)] // last column vertically to close
+        [InlineData(9, 1, 3, ShipDirection.Vertical,
+                    10, 1, 3, ShipDirection.Vertical)] // last two columns vertically to close
         public void ThrowsInvalidPositionProximityExceptionIfShipCloserThanOneFieldFromOtherShip(
             int ship1x, int ship1y, int ship1Length, ShipDirection ship1Direction,
             int ship2x, int ship2y, int ship2Length, ShipDirection ship2Direction)

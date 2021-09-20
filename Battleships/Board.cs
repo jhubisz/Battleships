@@ -142,12 +142,14 @@ namespace Battleships
         {
             foreach (var field in ship.Fields)
             {
-                for (int x = field.x - 2; x <= field.x + 1; x++)
+                var fieldX = field.x - 1;
+                var fieldY = field.y - 1;
+                for (int x = fieldX - 1; x <= fieldX + 1; x++)
                 {
-                    for (int y = field.y - 2; y <= field.y; y++)
+                    for (int y = fieldY - 1; y <= fieldY + 1; y++)
                     {
                         if (x >= Fields.GetLowerBound(0) && y >= Fields.GetLowerBound(1)
-                            && x < Fields.GetUpperBound(0) && y < Fields.GetUpperBound(1)
+                            && x <= Fields.GetUpperBound(0) && y <= Fields.GetUpperBound(1)
                             && Fields[x, y] is IShip && Fields[x, y] != ship)
                             throw new InvalidPositionProximityException("Ship to close to other ship.");
                     }

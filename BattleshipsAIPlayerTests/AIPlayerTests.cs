@@ -35,8 +35,8 @@ namespace BattleshipsAIPlayerTests
             player.PlaceShips();
 
             Assert.Collection(Game.PlayerABoard.Ships,
-                item => Assert.True(((IShip)item).CheckIfPositionExists(1, 1)),
-                item => Assert.True(((IShip)item).CheckIfPositionExists(1, 3)));
+                item => Assert.True(((IShip)item).CheckIfPositionExists(1, 3)),
+                item => Assert.True(((IShip)item).CheckIfPositionExists(1, 1)));
         }
 
         [Fact]

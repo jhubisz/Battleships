@@ -3,6 +3,7 @@ using Battleships.Enums;
 using Battleships.Exceptions;
 using BattleshipsAIPlayer.Interfaces;
 using System;
+using System.Linq;
 
 namespace BattleshipsAIPlayer
 {
@@ -21,7 +22,11 @@ namespace BattleshipsAIPlayer
 
         public void PlaceShips()
         {
-            foreach(var ship in Board.ShipConstraints.AllowedShips.Keys)
+            var ships = Board.ShipConstraints.AllowedShips.Keys.ToArray();
+            Array.Sort(ships);
+            Array.Reverse(ships);
+
+            foreach (var ship in ships)
             {
                 for (int i = 0; i < Board.ShipConstraints.AllowedShips[ship]; i++)
                 {

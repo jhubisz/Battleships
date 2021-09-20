@@ -3,13 +3,13 @@ using System;
 
 namespace BattleshipsAIPlayer
 {
-    class RandomGenerator : IRandomGenerator
+    public class RandomGenerator : IRandomGenerator
     {
         private Random Random { get; set; }
 
         public RandomGenerator()
         {
-            var Random = new Random();
+            Random = new Random();
         }
 
         public int Next(int length)
