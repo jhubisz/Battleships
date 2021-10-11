@@ -58,6 +58,22 @@ namespace BattleshipsAIPlayer
             }
         }
 
+        public void ProcessShotResult(FiredShotResult result, (int x, int y) positionShot)
+        {
+            switch (result.ResultType)
+            {
+                case FiredShotResultType.ShotMissed:
+                    ProcessMissedShotResult(positionShot);
+                    break;
+            }
+        }
+
+        private void ProcessMissedShotResult((int x, int y) position)
+        {
+            if (AvailableShotPositions.Contains(position))
+                AvailableShotPositions.Remove(position);
+        }
+
         public (int x, int y) MakeShot()
         {
             var shotPosition = PositionRandomizer.ReturnRandomShot(AvailableShotPositions.ToArray());

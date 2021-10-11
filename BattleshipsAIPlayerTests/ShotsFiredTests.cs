@@ -40,5 +40,15 @@ namespace BattleshipsAIPlayerTests
             Assert.Equal(position.x, shot.x);
             Assert.Equal(position.y, shot.y);
         }
+
+        [Fact]
+        public void PositionRemovedFromAvailablePositionsAfterMissedShot()
+        {
+            var positionShot = (x: 1, y: 1);
+            var firedShotResult = new FiredShotResult() { ResultType = FiredShotResultType.ShotMissed };
+            Player.ProcessShotResult(firedShotResult, positionShot);
+
+            Assert.DoesNotContain(positionShot, Player.AvailableShotPositions);
+        }
     }
 }
