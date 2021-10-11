@@ -76,16 +76,22 @@ namespace BattleshipsAIPlayer
 
         private void ProcessMissedShotResult((int x, int y) position)
         {
-            if (AvailableShotPositions.Contains(position))
-                AvailableShotPositions.Remove(position);
+            RemovePositionFromShotsLists(position);
         }
 
         private void ProcessShipHitShotResult((int x, int y) position)
         {
+            RemovePositionFromShotsLists(position);
+            PopulatePreferredPositionsAroundField(position);
+        }
+
+        private void RemovePositionFromShotsLists((int x, int y) position)
+        {
             if (AvailableShotPositions.Contains(position))
                 AvailableShotPositions.Remove(position);
 
-            PopulatePreferredPositionsAroundField(position);
+            if (PreferredShotPositions.Contains(position))
+                PreferredShotPositions.Remove(position);
         }
 
         private void PopulatePreferredPositionsAroundField((int x, int y) position)
