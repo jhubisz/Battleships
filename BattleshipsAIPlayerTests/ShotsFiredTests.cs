@@ -79,5 +79,22 @@ namespace BattleshipsAIPlayerTests
             Assert.DoesNotContain((x: 1, y: 1), Player.PreferredShotPositions);
             Assert.DoesNotContain((x: 2, y: 0), Player.PreferredShotPositions);
         }
+
+        [Fact]
+        public void FiresShotFromthePreferredPositionsAfterHitShot()
+        {
+            var positionShot = (x: 1, y: 1);
+            var firedShotResult = new FiredShotResult() { ResultType = FiredShotResultType.ShipHit, Hit = true };
+            Player.ProcessShotResult(firedShotResult, positionShot);
+
+            var positionToShoot = 2;
+            var position = Player.PreferredShotPositions[positionToShoot];
+            var randomizer = new PositionRandomizer(new RandomGeneratorMock(new int[] { positionToShoot }));
+            Player.PositionRandomizer = randomizer;
+
+            var shot = Player.MakeShot();
+            Assert.Equal(position.x, shot.x);
+            Assert.Equal(position.y, shot.y);
+        }
     }
 }

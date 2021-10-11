@@ -104,8 +104,10 @@ namespace BattleshipsAIPlayer
 
         public (int x, int y) MakeShot()
         {
-            var shotPosition = PositionRandomizer.ReturnRandomShot(AvailableShotPositions.ToArray());
-            return shotPosition;
+            if (PreferredShotPositions.Count > 0)
+                return PositionRandomizer.ReturnRandomShot(PreferredShotPositions.ToArray());
+
+            return PositionRandomizer.ReturnRandomShot(AvailableShotPositions.ToArray());
         }
     }
 }
