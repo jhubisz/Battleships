@@ -50,5 +50,34 @@ namespace BattleshipsAIPlayerTests
 
             Assert.DoesNotContain(positionShot, Player.AvailableShotPositions);
         }
+
+        [Fact]
+        public void PositionRemovedFromAvailablePositionsAfterHitShot()
+        {
+            var positionShot = (x: 1, y: 1);
+            var firedShotResult = new FiredShotResult() { ResultType = FiredShotResultType.ShipHit, Hit = true };
+            Player.ProcessShotResult(firedShotResult, positionShot);
+
+            Assert.DoesNotContain(positionShot, Player.AvailableShotPositions);
+        }
+
+        [Fact]
+        public void PositionsAddedToPreferredPositionsAfterHitShot()
+        {
+            var positionShot = (x: 1, y: 1);
+            var firedShotResult = new FiredShotResult() { ResultType = FiredShotResultType.ShipHit, Hit = true };
+            Player.ProcessShotResult(firedShotResult, positionShot);
+
+            Assert.Contains((x: 1, y: 2), Player.PreferredShotPositions);
+            Assert.Contains((x: 2, y: 1), Player.PreferredShotPositions);
+            Assert.Contains((x: 2, y: 2), Player.PreferredShotPositions);
+
+            Assert.DoesNotContain((x: 0, y: 0), Player.PreferredShotPositions);
+            Assert.DoesNotContain((x: 0, y: 1), Player.PreferredShotPositions);
+            Assert.DoesNotContain((x: 0, y: 2), Player.PreferredShotPositions);
+            Assert.DoesNotContain((x: 1, y: 0), Player.PreferredShotPositions);
+            Assert.DoesNotContain((x: 1, y: 1), Player.PreferredShotPositions);
+            Assert.DoesNotContain((x: 2, y: 0), Player.PreferredShotPositions);
+        }
     }
 }

@@ -12,12 +12,16 @@ namespace BattleshipsAIPlayer
     {
         public Board Board { get; }
         public List<(int x, int y)> AvailableShotPositions { get; private set; }
+        public List<(int x, int y)> PreferredShotPositions { get; private set; }
 
         public IPositionRandomizer PositionRandomizer { get; set; }
         public IAvailableShipPositionsFinder PositionFinder { get; }
 
         public AIPlayer(Board board, IPositionRandomizer positionRandomizer, IAvailableShipPositionsFinder positionFinder)
         {
+            AvailableShotPositions = new List<(int x, int y)>();
+            PreferredShotPositions = new List<(int x, int y)>();
+
             Board = board;
             GetInitialAvailablePositions();
             PositionRandomizer = positionRandomizer;
@@ -26,7 +30,6 @@ namespace BattleshipsAIPlayer
 
         private void GetInitialAvailablePositions()
         {
-            AvailableShotPositions = new List<(int x, int y)>();
             for (int x = 1; x < Board.Fields.GetUpperBound(0) + 1; x++)
             {
                 for (int y = 1; y < Board.Fields.GetUpperBound(0) + 1; y++)
@@ -65,6 +68,9 @@ namespace BattleshipsAIPlayer
                 case FiredShotResultType.ShotMissed:
                     ProcessMissedShotResult(positionShot);
                     break;
+                case FiredShotResultType.ShipHit:
+                    ProcessShipHitShotResult(positionShot);
+                    break;
             }
         }
 
@@ -72,6 +78,28 @@ namespace BattleshipsAIPlayer
         {
             if (AvailableShotPositions.Contains(position))
                 AvailableShotPositions.Remove(position);
+        }
+
+        private void ProcessShipHitShotResult((int x, int y) position)
+        {
+            if (AvailableShotPositions.Contains(position))
+                AvailableShotPositions.Remove(position);
+
+            PopulatePreferredPositionsAroundField(position);
+        }
+
+        private void PopulatePreferredPositionsAroundField((int x, int y) position)
+        {
+            for (int x = position.x - 1; x <= position.x + 1; x++)
+            {
+                for (int y = position.y - 1; y <= position.y + 1; y++)
+                {
+                    if (AvailableShotPositions.Contains((x, y))
+                        && !PreferredShotPositions.Contains((x, y)))
+                        PreferredShotPositions.Add((x, y));
+                        
+                }
+            }
         }
 
         public (int x, int y) MakeShot()
