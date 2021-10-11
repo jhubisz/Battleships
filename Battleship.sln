@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleshipsAIPlayer", "Batt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleshipsAIPlayerTests", "BattleshipsAIPlayerTests\BattleshipsAIPlayerTests.csproj", "{761E22C5-63C8-40CB-8C92-E6102C17B23F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDoubles", "TestDoubles\TestDoubles.csproj", "{14E70B80-0789-4FD6-AE1B-08B8DE17610E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDoubles", "TestDoubles\TestDoubles.csproj", "{14E70B80-0789-4FD6-AE1B-08B8DE17610E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FCA20691-FC27-41B1-9218-05C79816251A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleshipsConsole", "BattleshipsConsole\BattleshipsConsole.csproj", "{08A528F4-1E74-4074-AEC3-5B6FE9514BBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{14E70B80-0789-4FD6-AE1B-08B8DE17610E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14E70B80-0789-4FD6-AE1B-08B8DE17610E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14E70B80-0789-4FD6-AE1B-08B8DE17610E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08A528F4-1E74-4074-AEC3-5B6FE9514BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08A528F4-1E74-4074-AEC3-5B6FE9514BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08A528F4-1E74-4074-AEC3-5B6FE9514BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08A528F4-1E74-4074-AEC3-5B6FE9514BBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

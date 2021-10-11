@@ -30,8 +30,7 @@ namespace BattleshipsAIPlayerTests
             positions.Add(2, new (int x, int y, ShipDirection direction)[] { (1, 3, ShipDirection.Horizontal) });
             var positionFinder = new AvailableShipPositionsFinderMock(positions);
             
-            var player = new AIPlayer(randomizer, positionFinder);
-            player.Board = Game.PlayerABoard;
+            var player = new AIPlayer(Game.PlayerABoard, randomizer, positionFinder);
             player.PlaceShips();
 
             Assert.Collection(Game.PlayerABoard.Ships,
@@ -47,8 +46,7 @@ namespace BattleshipsAIPlayerTests
             var positions = new Dictionary<int, (int x, int y, ShipDirection direction)[]>();
             var positionFinder = new AvailableShipPositionsFinderMock(positions);
 
-            var player = new AIPlayer(randomizer, positionFinder);
-            player.Board = Game.PlayerABoard;
+            var player = new AIPlayer(Game.PlayerABoard, randomizer, positionFinder);
 
             Assert.Throws<NoAvailableShipPositionsException>(() => player.PlaceShips());
         }

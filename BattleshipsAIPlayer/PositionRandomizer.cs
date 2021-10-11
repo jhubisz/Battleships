@@ -17,5 +17,10 @@ namespace BattleshipsAIPlayer
         {
             return positions[RandomGenerator.Next(positions.Length)];
         }
+
+        public (int x, int y) ReturnRandomShot((int x, int y)[] positions)
+        {
+            return positions[RandomGenerator.Next(positions.Length)];
+        }
     }
 }
