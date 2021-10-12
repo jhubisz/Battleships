@@ -1,6 +1,7 @@
 ﻿using Battleships;
 using Battleships.Enums;
 using Battleships.Exceptions;
+using Battleships.Fields.Interfaces;
 using BattleshipsAIPlayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -71,6 +72,9 @@ namespace BattleshipsAIPlayer
                 case FiredShotResultType.ShipHit:
                     ProcessShipHitShotResult(positionShot);
                     break;
+                case FiredShotResultType.ShipHitAndSink:
+                    ProcessShipHitAndSkinkShotResult(positionShot, result.SinkedShip);
+                    break;
             }
         }
 
@@ -83,6 +87,12 @@ namespace BattleshipsAIPlayer
         {
             RemovePositionFromShotsLists(position);
             PopulatePreferredPositionsAroundField(position);
+        }
+
+        private void ProcessShipHitAndSkinkShotResult((int x, int y) position, IShip ship)
+        {
+            RemovePositionFromShotsLists(position);
+            RemovePositionsFromSinkedShip(ship);
         }
 
         private void RemovePositionFromShotsLists((int x, int y) position)
@@ -104,6 +114,19 @@ namespace BattleshipsAIPlayer
                         && !PreferredShotPositions.Contains((x, y)))
                         PreferredShotPositions.Add((x, y));
                         
+                }
+            }
+        }
+        private void RemovePositionsFromSinkedShip(IShip ship)
+        {
+            foreach(var field in ship.Fields)
+            {
+                for (int x = field.x - 1; x <= field.x + 1; x++)
+                {
+                    for (int y = field.y - 1; y <= field.y + 1; y++)
+                    {
+                        RemovePositionFromShotsLists((x, y));
+                    }
                 }
             }
         }

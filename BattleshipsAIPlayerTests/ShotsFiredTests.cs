@@ -1,5 +1,6 @@
 ﻿using Battleships;
 using Battleships.Enums;
+using Battleships.Fields;
 using BattleshipsAIPlayer;
 using BattleshipsTests.TestDoubles.Mocks;
 using System.Collections.Generic;
@@ -81,7 +82,7 @@ namespace BattleshipsAIPlayerTests
         }
 
         [Fact]
-        public void FiresShotFromthePreferredPositionsAfterHitShot()
+        public void FiresShotFromThePreferredPositionsAfterHitShot()
         {
             var positionShot = (x: 1, y: 1);
             var firedShotResult = new FiredShotResult() { ResultType = FiredShotResultType.ShipHit, Hit = true };
@@ -110,6 +111,39 @@ namespace BattleshipsAIPlayerTests
 
             Assert.DoesNotContain(positionMissed, Player.AvailableShotPositions);
             Assert.DoesNotContain(positionMissed, Player.PreferredShotPositions);
+        }
+
+        [Fact]
+        public void PositionRemovedFromAvailablePositionsAfterHitAndSinkShot()
+        {
+            var sinkedShip = Game.PlayerABoard.Ships[0];
+            var positionShot = sinkedShip.Fields[0];
+            var firedShotResult = new FiredShotResult() { ResultType = FiredShotResultType.ShipHitAndSink, Hit = true, SinkedShip = sinkedShip };
+            Player.ProcessShotResult(firedShotResult, positionShot);
+
+            Assert.DoesNotContain(positionShot, Player.AvailableShotPositions);
+            Assert.DoesNotContain(positionShot, Player.PreferredShotPositions);
+        }
+
+        [Fact]
+        public void PositionsAroundSinkShipRemovedFromAvailablePositionsAfterHitAndSinkShot()
+        {
+            var sinkedShip = Game.PlayerABoard.Ships[0];
+            var positionShot = sinkedShip.Fields[0];
+            var firedShotResult = new FiredShotResult() { ResultType = FiredShotResultType.ShipHitAndSink, Hit = true, SinkedShip = sinkedShip };
+            Player.ProcessShotResult(firedShotResult, positionShot);
+
+            foreach(var shipField in sinkedShip.Fields)
+            {
+                for(int x = shipField.x - 1; x <= shipField.x + 1; x++)
+                {
+                    for (int y = shipField.y - 1; y <= shipField.y + 1; y++)
+                    {
+                        Assert.DoesNotContain((x, y), Player.AvailableShotPositions);
+                        Assert.DoesNotContain((x, y), Player.PreferredShotPositions);
+                    }
+                }
+            }
         }
     }
 }
