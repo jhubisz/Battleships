@@ -13,8 +13,13 @@ Assumptions
 * The ships cant be placed next to other ships (they have to have at least 1 field space from other ships in all directions)
 * Second (and subsequent) miss on a previously aimed field yields same results as on first shot resulting in lost turn
 * Second (and subsequent) hit on a previously hit ship field yields same results as on first shot resulting in lost turn
+* Game safety (cheating) was not a concern, if that would be a concer additional interfacing layer would be necessary on top of the business logic
 
 Projects
 --------
-* Battleships - contains business logic for the game (rules)
-* BattleshipsTests - contains tests for the business logic
+* Tests
+    * BattleshipsAIPlayerTests  - contains tests for the AI player
+    * BattleshipsTests          - contains tests for the business logic
+* Battleships                   - contains business logic for the game (rules)
+* BattleshipsAIPlayer           - contains AI player logic
+* BattleshipsConsole            - presentation of a game based on two AI players
