@@ -14,16 +14,19 @@ namespace BattleshipsAIPlayerTests
         public BattleshipsGame<ShipConstraintsMock> Game { get; set; }
         public AIPlayer Player;
 
+        private PositionRandomizer randomizer;
+        private IAvailableShipPositionsFinder positionFinder;
+
         public ShotsFiredTests()
         {
             Game = new BattleshipsGame<ShipConstraintsMock>();
             Game.InitializeGame();
 
-            var randomizer = new PositionRandomizer(new RandomGeneratorMock(new int[] { 0 }));
+            randomizer = new PositionRandomizer(new RandomGeneratorMock(new int[] { 0 }));
             var positions = new Dictionary<int, (int x, int y, ShipDirection direction)[]>();
             positions.Add(1, new (int x, int y, ShipDirection direction)[] { (1, 1, ShipDirection.Horizontal) });
             positions.Add(2, new (int x, int y, ShipDirection direction)[] { (1, 3, ShipDirection.Horizontal) });
-            var positionFinder = new AvailableShipPositionsFinderMock(positions);
+            positionFinder = new AvailableShipPositionsFinderMock(positions);
 
             Player = new AIPlayer(Game.PlayerABoard, randomizer, positionFinder);
             Player.PlaceShips();
@@ -126,7 +129,7 @@ namespace BattleshipsAIPlayerTests
         }
 
         [Fact]
-        public void PositionsAroundSinkShipRemovedFromAvailablePositionsAfterHitAndSinkShot()
+        public void PositionsAroundSinkedShipRemovedFromAvailablePositionsAfterHitAndSinkShot()
         {
             var sinkedShip = Game.PlayerABoard.Ships[0];
             var positionShot = sinkedShip.Fields[0];
@@ -144,6 +147,31 @@ namespace BattleshipsAIPlayerTests
                     }
                 }
             }
+        }
+
+        [Fact]
+        public void PositionsListsAreClearedOnShipHitAndAllShipsSinked()
+        {
+            var sinkedShip = Game.PlayerABoard.Ships[0];
+            var positionShot = sinkedShip.Fields[0];
+            var firedShotResult = new FiredShotResult() { ResultType = FiredShotResultType.ShipHitAndAllShipsSinked, Hit = true, SinkedShip = sinkedShip };
+            Player.ProcessShotResult(firedShotResult, positionShot);
+
+            Assert.Empty(Player.AvailableShotPositions);
+            Assert.Empty(Player.PreferredShotPositions);
+        }
+
+        [Fact]
+        public void MakesShotUsingDelegate()
+        {
+            var positionShot = (x: 1, y: 1);
+            var firedShotResult = new FiredShotResult() { ResultType = FiredShotResultType.ShotMissed };
+            var delegateShot = new AIPlayer.PerformShot((int x, int y) => { return firedShotResult; });
+
+            Player = new AIPlayer(Game.PlayerABoard, randomizer, positionFinder, delegateShot);
+            Player.ExecuteTurn();
+
+            Assert.DoesNotContain(positionShot, Player.AvailableShotPositions);
         }
     }
 }
