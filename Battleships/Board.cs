@@ -44,6 +44,7 @@ namespace Battleships
         }
 
         private FiredShotResult CheckAllShipsSinked(FiredShotResult result)
+
         {
             if (result.ResultType != FiredShotResultType.ShipHitAndSink)
                 return result;

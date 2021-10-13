@@ -10,7 +10,7 @@ namespace Battleships.Fields
         public List<(int x, int y)> Fields { get; set; }
         public int Length { get; set; }
 
-        private List<(int x, int y)> HitFields { get; set; }
+        public List<(int x, int y)> HitFields { get; set; }
 
         public Ship(int length)
         {
